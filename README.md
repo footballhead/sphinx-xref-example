@@ -17,7 +17,7 @@ pipenv install
 ## Building
 
 ```
-pipenv run sphinx-build source build
+pipenv run sphinx-build source docs
 ```
 
 ## Contributing
@@ -35,7 +35,7 @@ NOTE: mypy could take a while first run to generate a type cache.
 I've found for iteration that you want to rebuild everything:
 
 ```
-pipenv run sphinx-build source build -a -E
+pipenv run sphinx-build source docs -a -E
 ```
 
 ## See Also

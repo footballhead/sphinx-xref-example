@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mydoc.py Source &#8212; sphinx-xref-example  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="mydoc.py Reference" href="mydoc_reference.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="mydoc-py-source">
+<h1>mydoc.py Source<a class="headerlink" href="#mydoc-py-source" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Sphinx extension which demonstrates how to use xrefs. Provides:</span>
+
+<span class="sd">* ``mydoc``: A custom role that works like Sphinx doc</span>
+<span class="sd">* ``mytoctree``: A custom direction that works like Sphinx toctree</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">docutils</span> <span class="kn">import</span> <span class="n">nodes</span>
+<span class="kn">from</span> <span class="nn">docutils.parsers</span> <span class="kn">import</span> <span class="n">rst</span>
+<span class="kn">from</span> <span class="nn">docutils.parsers.rst</span> <span class="kn">import</span> <span class="n">states</span>
+<span class="kn">from</span> <span class="nn">sphinx</span> <span class="kn">import</span> <span class="n">addnodes</span><span class="p">,</span> <span class="n">application</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+
+
+<span class="k">def</span> <span class="nf">mydoc</span><span class="p">(</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">rawtext</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">lineno</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">inliner</span><span class="p">:</span> <span class="n">states</span><span class="o">.</span><span class="n">Inliner</span><span class="p">,</span>
+    <span class="n">options</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{},</span>
+    <span class="n">content</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">nodes</span><span class="o">.</span><span class="n">Node</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This role tries to emulate the doc role to show how pending_xref works.</span>
+
+<span class="sd">    A custom role is a callable, e.g. a function or a class that defines __call__.</span>
+
+<span class="sd">    For what all the parameters do, see the official docs:</span>
+<span class="sd">    https://docutils.sourceforge.io/docs/howto/rst-roles.html</span>
+
+<span class="sd">    Sphinx knows mydoc exists because it is registered in setup() with add_role.</span>
+
+<span class="sd">    TODO: What is type of &quot;A list of system messages&quot;? I&#39;m using Any right now</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># pending_xref is where all the magic happens.</span>
+    <span class="n">xref</span> <span class="o">=</span> <span class="n">addnodes</span><span class="o">.</span><span class="n">pending_xref</span><span class="p">(</span>
+        <span class="c1"># reftarget is the name of the document to which to link</span>
+        <span class="n">reftarget</span><span class="o">=</span><span class="n">text</span><span class="p">,</span>
+        <span class="c1"># refdomain for docs must be &#39;std&#39;</span>
+        <span class="n">refdomain</span><span class="o">=</span><span class="s2">&quot;std&quot;</span><span class="p">,</span>
+        <span class="c1"># reftype for document xrefs must be &#39;doc&#39;</span>
+        <span class="n">reftype</span><span class="o">=</span><span class="s2">&quot;doc&quot;</span><span class="p">,</span>
+        <span class="c1"># refexplicit: wrap the child or replace with reftarget title</span>
+        <span class="n">refexplicit</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="c1"># refwarn if True will warn when reftarget doesn&#39;t exist</span>
+        <span class="n">refwarn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># For inline roles, a parent is not necessary. This will be important in</span>
+    <span class="c1"># the mytoctree example though!</span>
+
+    <span class="c1"># pending_xref must have a child! This will be overwritten when refexplicit</span>
+    <span class="c1"># is False so in this example we don&#39;t care what the child actually</span>
+    <span class="c1"># contains.</span>
+    <span class="n">xref</span> <span class="o">+=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">inline</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="c1"># The return is 2 lists: a list of nodes (the xref), and a list I don&#39;t care about</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">xref</span><span class="p">],</span> <span class="p">[]</span>
+
+
+<span class="k">class</span> <span class="nc">MyTocTree</span><span class="p">(</span><span class="n">rst</span><span class="o">.</span><span class="n">Directive</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A directive that generates a table of contents, similar to toctree.</span>
+
+<span class="sd">    Sphinx knows mytoctree exists because it is registered in setup() with</span>
+<span class="sd">    add_directive.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># All table of contents names are provided in directive content</span>
+    <span class="n">has_content</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">nodes</span><span class="o">.</span><span class="n">Node</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct a bulleted list. Each content line is turned into a link and added</span>
+<span class="sd">        to the bullet list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Since names are provided by content, fail if we have no content</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assert_has_content</span><span class="p">()</span>
+
+        <span class="c1"># A bullet_list translates into &lt;ul&gt;</span>
+        <span class="n">bullet_list</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">bullet_list</span><span class="p">()</span>
+
+        <span class="c1"># Each line of the content is a new link</span>
+        <span class="k">for</span> <span class="n">content_line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
+            <span class="c1"># A bullet_list contains list_items</span>
+            <span class="n">list_item</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">list_item</span><span class="p">()</span>
+            <span class="n">bullet_list</span> <span class="o">+=</span> <span class="n">list_item</span>
+
+            <span class="c1"># list_items contain paragraphs</span>
+            <span class="n">xref_container</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">paragraph</span><span class="p">()</span>
+            <span class="n">list_item</span> <span class="o">+=</span> <span class="n">xref_container</span>
+
+            <span class="c1"># pending_xref is where all the magic happens.</span>
+            <span class="n">xref</span> <span class="o">=</span> <span class="n">addnodes</span><span class="o">.</span><span class="n">pending_xref</span><span class="p">(</span>
+                <span class="c1"># reftarget is the name of the document to which to link</span>
+                <span class="n">reftarget</span><span class="o">=</span><span class="n">content_line</span><span class="p">,</span>
+                <span class="c1"># refdomain for docs must be &#39;std&#39;</span>
+                <span class="n">refdomain</span><span class="o">=</span><span class="s2">&quot;std&quot;</span><span class="p">,</span>
+                <span class="c1"># reftype for document xrefs must be &#39;doc&#39;</span>
+                <span class="n">reftype</span><span class="o">=</span><span class="s2">&quot;doc&quot;</span><span class="p">,</span>
+                <span class="c1"># refexplicit: use a user title (the child) or reftarget title</span>
+                <span class="n">refexplicit</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="c1"># refwarn if True will warn when a reftarget doesn&#39;t exist</span>
+                <span class="n">refwarn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="c1"># For roles, it&#39;s assumed we&#39;re already in a paragraph. For</span>
+            <span class="c1"># directives this doesn&#39;t hold true. So we have to ensure we have</span>
+            <span class="c1"># a proper parent for the xref</span>
+            <span class="n">xref_container</span> <span class="o">+=</span> <span class="n">xref</span>
+
+            <span class="c1"># pending_xref must have a child! This will be overwritten when</span>
+            <span class="c1"># refexplicit is False so in this example we don&#39;t care what the</span>
+            <span class="c1"># child actually contains.</span>
+            <span class="c1">#</span>
+            <span class="c1"># (If refexplicit is True then the given text is turned into a link)</span>
+            <span class="n">xref</span> <span class="o">+=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">inline</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">content_line</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">bullet_list</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">app</span><span class="p">:</span> <span class="n">application</span><span class="o">.</span><span class="n">Sphinx</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main extension entry point.</span>
+
+<span class="sd">    Registers the custom directive and role so that Sphinx knows how to parse</span>
+<span class="sd">    them.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">app</span><span class="o">.</span><span class="n">add_role</span><span class="p">(</span><span class="s2">&quot;mydoc&quot;</span><span class="p">,</span> <span class="n">mydoc</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">add_directive</span><span class="p">(</span><span class="s2">&quot;mytoctree&quot;</span><span class="p">,</span> <span class="n">MyTocTree</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;parallel_read_safe&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;parallel_write_sage&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">sphinx-xref-example</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="lorem_ipsum.html">Lorem ipsum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mydoc_reference.html">mydoc.py Reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">mydoc.py Source</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="mydoc_reference.html" title="previous chapter">mydoc.py Reference</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Michael Hitchens.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/mydoc_source.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

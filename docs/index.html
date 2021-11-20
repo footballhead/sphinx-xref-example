@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>sphinx-xref-example &#8212; sphinx-xref-example  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Lorem ipsum" href="lorem_ipsum.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="sphinx-xref-example">
+<h1>sphinx-xref-example<a class="headerlink" href="#sphinx-xref-example" title="Permalink to this headline">¶</a></h1>
+<p>This example provides an extension called <code class="docutils literal notranslate"><span class="pre">mydoc.py</span></code> which registers a custom directive and role.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mydoc</span></code>: A role that works like the Sphinx <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-doc">doc</a> role. This creates a hyperlink to another RST document.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mytoctree</span></code>: A directive that works similar to the Sphinx <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html?highlight=toctree#directive-toctree">toctree</a> directive. This creates a bullet list of hyperlinks to RST documents</p></li>
+</ul>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<section id="custom-doc-role">
+<h3>Custom doc role<a class="headerlink" href="#custom-doc-role" title="Permalink to this headline">¶</a></h3>
+<p>Here’s how the official <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-doc">doc</a> role works: <a class="reference internal" href="lorem_ipsum.html"><span class="doc">Lorem ipsum</span></a></p>
+<p>Here’s how my custom <code class="docutils literal notranslate"><span class="pre">mydoc</span></code> role works: <a class="reference internal" href="lorem_ipsum.html"><span class="doc">Lorem ipsum</span></a></p>
+</section>
+<section id="custom-toctree-directive">
+<h3>Custom toctree directive<a class="headerlink" href="#custom-toctree-directive" title="Permalink to this headline">¶</a></h3>
+<p>Here’s how the official <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html?highlight=toctree#directive-toctree">toctree</a> directive works:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lorem_ipsum.html">Lorem ipsum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mydoc_reference.html">mydoc.py Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mydoc_source.html">mydoc.py Source</a></li>
+</ul>
+</div>
+<p>Here’s how my custom <code class="docutils literal notranslate"><span class="pre">mytoctree</span></code> directive works:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="lorem_ipsum.html"><span class="doc">Lorem ipsum</span></a></p></li>
+<li><p><a class="reference internal" href="mydoc_reference.html"><span class="doc">mydoc.py Reference</span></a></p></li>
+<li><p><a class="reference internal" href="mydoc_source.html"><span class="doc">mydoc.py Source</span></a></p></li>
+<li><p><span>this_doc_does_not_exist</span></p></li>
+</ul>
+</section>
+</section>
+<section id="layout">
+<h2>Layout<a class="headerlink" href="#layout" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>source/               &lt;-- source directory made by sphinx-quickstart
+    _ext/             &lt;-- where I put extensions (similar to tutorials)
+        mydoc.py      &lt;-- registers mydoc and mytoctree
+    index.rst         &lt;-- This page! Uses mydoc and mytoctree
+    lorem_ipsum.rst   &lt;-- A page that exists solely to be linked to
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">sphinx-xref-example</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lorem_ipsum.html">Lorem ipsum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mydoc_reference.html">mydoc.py Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mydoc_source.html">mydoc.py Source</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="lorem_ipsum.html" title="next chapter">Lorem ipsum</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Michael Hitchens.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
