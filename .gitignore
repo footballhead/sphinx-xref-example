@@ -1,2 +1,4 @@
 build/
 .mypy_cache/
+docs/.buildinfo
+docs/.doctrees/
