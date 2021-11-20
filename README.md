@@ -2,7 +2,10 @@
 
 Basic example of integrating xref's into your own directives and roles.
 
-This generates a Sphinx site with more details!
+This generates a Sphinx site with more details! Alternatively:
+
+* View on GitHub Pages: https://footballhead.github.io/sphinx-xref-example/
+* View on Read the Docs: https://sphinx-xref-example.readthedocs.io/
 
 ## Requirements
 
